@@ -16,7 +16,7 @@ router.get('/', function (req, res, next) {
 
 /* POST torrent submission form */
 router.post('/', function (req, res, next) {
-  const transmission_rpc_url = new URL(process.env.TRANSMISSION_RPC_URL)
+  const transmission_rpc_url = new URL(process.env.TRANSMISSION_RPC_URL || 'http://localhost:9001/transmission/rpc/')
   const torrent_url = new URL(req.body.url)
   console.log(`Adding <${torrent_url}> to <${transmission_rpc_url.hostname}>…`)
   const transmission = new Transmission({
