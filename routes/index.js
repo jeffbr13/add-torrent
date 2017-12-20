@@ -32,12 +32,17 @@ router.post('/', function (req, res, next) {
       console.log(`Added torrent <${torrent_url}> to <${transmission_rpc_url.hostname}>:`, torrent)
       res.status(201)
       res.setHeader('ETag', torrent.hashString)
-      res.render('index', {
-        title: 'add-torrent',
-        torrent_url: torrent_url,
-        torrent_name: torrent.name,
-        torrent_hash: torrent.hashString,
-      })
+      torrent.url = torrent_url
+
+      if (req.header('Accept').indexOf('application/json') !== -1) {
+        res.json(torrent)
+
+      } else {
+        res.render('index', {
+          title: 'add-torrent',
+          torrent: torrent,
+        })
+      }
     }).catch(next)
 })
 

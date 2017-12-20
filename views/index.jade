@@ -5,6 +5,6 @@ block content
     label Magnet link or torrent URL:
       input(id='url' name='url' type='url')
     input(type='submit' value='Torrent!')
-  if torrent_name
+  if torrent
     section(id='success')
-      p ✓ Added #[a(href=torrent_url) #{torrent_name}] (#{torrent_hash}).
+      p ✓ Added #[a(href=torrent.url) #{torrent.name}] (#{torrent.hashString}).
