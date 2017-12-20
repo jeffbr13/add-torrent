@@ -1,8 +1,10 @@
 extends layout
 
 block content
-  h1= title
   form(id='torrent-url-submission-form' method='post')
     label Magnet link or torrent URL:
       input(id='url' name='url' type='url')
     input(type='submit' value='Torrent!')
+  if torrent_name
+    section(id='success')
+      p ✓ Added #[a(href=torrent_url) #{torrent_name}] (#{torrent_hash}).

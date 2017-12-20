@@ -4,4 +4,11 @@ html
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
-    block content
+    header
+      h1= title
+    main
+      block content
+    footer
+      hr
+      p 🏴‍☠️ product 🛠 by #[a(href="http://jeffbr13.net" rel="author") Ben Jeffrey]
+      p #[a(href="https://github.com/jeffbr13/add-transmission") Source code] available under the #[a(href="https://www.mozilla.org/MPL/2.0/") MPL 2.0].
