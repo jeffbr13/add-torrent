@@ -1,0 +1,8 @@
+extends layout
+
+block content
+  h1= title
+  form(id='torrent-url-submission-form' method='post')
+    label Magnet link or torrent URL:
+      input(id='url' name='url' type='url')
+    input(type='submit' value='Torrent!')
