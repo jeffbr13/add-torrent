@@ -11,6 +11,8 @@ Set the following environment variables:
 
 - `$TRANSMISSION_RPC_URL`: URL of your Transmission daemon's RPC interface,
   defaults to `http://localhost:9091/transmission/rpc/`.
+- `$DOWNLOAD_DIRECTORIES`: array of `name:/my/directory,…` for torrent content
+  to be moved to upon completion.
 - `$PORT`: to serve from, defaults to `3000`.
 
 

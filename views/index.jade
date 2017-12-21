@@ -4,6 +4,10 @@ block content
   form(id='torrent-url-submission-form' method='post')
     label Magnet link or torrent URL:
       input(id='url' name='url' type='url')
+    if download_types
+      select(name='type' id='download-directory')
+        each download_type in download_types
+          option(value= download_type)= download_type
     input(type='submit' value='Torrent!')
   if torrent
     section(id='success')
