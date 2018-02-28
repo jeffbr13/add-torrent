@@ -45,3 +45,51 @@ http post localhost:3000/ url='https://archive.org/download/flickr-ows-05-650328
 #     "url": "https://archive.org/download/flickr-ows-05-6503285175/flickr-ows-05-6503285175_archive.torrent"
 # }
 ```
+
+
+Build
+-----
+
+Via Docker:
+
+```bash
+docker build -t $DOCKER_USERNAME/add-torrent .
+```
+
+
+Deploy
+------
+
+### Kubernetes
+
+To deploy on Kubernetes, we create a [ConfigMap][]
+to hold our environment variables and then apply
+the [provided YAML][kubernetes-yaml]
+to your Kubernetes cluster:
+
+
+
+```bash
+kubectl create configmap add-torrent-config \
+    --from-literal=transmission-rpc-url=$TRANSMISSION_RPC_URL \
+    --from-literal=download-directories=$DOWNLOAD_DIRECTORIES
+# configmap "add-torrent-config" created
+
+kubectl apply -f kubernetes.yml
+# deployment "add-torrent-deployment" created
+# service "add-torrent-service" created
+# ingress "add-torrent-ingress" created
+```
+
+The Kubernetes resource file contains:
+
+- a Deployment to download and run the container,
+  using the `add-torrent-config` ConfigMap for environment variables
+- a Service to abstract between the deployment's pods and the ingress
+- an Ingress (this one uses [`ingress-nginx`][ingress-nginx],
+  so you should alter this for your environment)
+
+
+[kubernetes-yaml]: ./kubernetes.yml
+[ConfigMap]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/
+[ingress-nginx]: https://github.com/kubernetes/ingress-nginx/
