@@ -1,0 +1,12 @@
+---
+apiVersion: v1
+name: add-torrent
+description: Send torrent URLs to a remote Transmission daemon.
+version: 0.1.0
+home: http://add-torrent.jeffbr13.net
+sources:
+  - https://github.com/jeffbr13/add-torrent
+maintainers:
+  - name: Ben Jeffrey
+    email: add-torrent@jeffbr13.net
+    url: http://jeffbr13.net

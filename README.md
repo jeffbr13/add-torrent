@@ -60,36 +60,16 @@ docker build -t $DOCKER_USERNAME/add-torrent .
 Deploy
 ------
 
-### Kubernetes
+### Kubernetes via Helm
 
-To deploy on Kubernetes, we create a [ConfigMap][]
-to hold our environment variables and then apply
-the [provided YAML][kubernetes-yaml]
-to your Kubernetes cluster:
-
-
+Check [values.yaml](./helm/add-torrent/values.yaml) for full list of settings:
 
 ```bash
-kubectl create configmap add-torrent-config \
-    --from-literal=transmission-rpc-url=$TRANSMISSION_RPC_URL \
-    --from-literal=download-directories=$DOWNLOAD_DIRECTORIES
-# configmap "add-torrent-config" created
-
-kubectl apply -f kubernetes.yml
-# deployment "add-torrent-deployment" created
-# service "add-torrent-service" created
-# ingress "add-torrent-ingress" created
+cd helm
+helm install add-torrent \
+    --set transmissionRpcUrl=$TRANSMISSION_RPC_URL \
+    # see <https://github.com/kubernetes/helm/blob/master/docs/using_helm.md#the-format-and-limitations-of---set>
+    --set downloadDirectories=$(echo $DOWNLOAD_DIRECTORIES | sed 's/,/\\\,/g') \
+    # use NodePort for minikube, ClusterIP for ingress-nginx, otherwise LoadBalancer
+    --set service.type=NodePort
 ```
-
-The Kubernetes resource file contains:
-
-- a Deployment to download and run the container,
-  using the `add-torrent-config` ConfigMap for environment variables
-- a Service to abstract between the deployment's pods and the ingress
-- an Ingress (this one uses [`ingress-nginx`][ingress-nginx],
-  so you should alter this for your environment)
-
-
-[kubernetes-yaml]: ./kubernetes.yml
-[ConfigMap]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/
-[ingress-nginx]: https://github.com/kubernetes/ingress-nginx/
