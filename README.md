@@ -73,3 +73,13 @@ helm install add-torrent \
     # use NodePort for minikube, ClusterIP for ingress-nginx, otherwise LoadBalancer
     --set service.type=NodePort
 ```
+
+For production use with an existing `ingress-nginx` configuration:
+
+```bash
+helm install add-torrent \
+    --set transmissionRpcUrl=$TRANSMISSION_RPC_URL \
+    --set downloadDirectories=$(echo $DOWNLOAD_DIRECTORIES | sed 's/,/\\\,/g') \
+    --set ingress.enabled=true \
+    --set ingress.hosts="{my.host.name,}"
+```
